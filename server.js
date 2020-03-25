@@ -18,7 +18,6 @@ app.use(express.static("public"));
 // mongoose connection
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
 
-
 // html routes 
 app.get("/stats", (req, res) => {
     res.sendFile(path.join(__dirname, "../Workout-tracker/public/stats.html"));
