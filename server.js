@@ -21,14 +21,14 @@ mongoose.Promise = global.Promise
 mongoose.connect
 mongoose.connect(process.env.MONGODB_URI || "mongodb://workoutTracker:workout1@ds135810.mlab.com:35810/heroku_kjf9z8b5", { useNewUrlParser: true });
 
-// html routes 
+// html routes  --- dont work on heroku tho
 app.get("/stats", (req, res) => {
-    res.sendFile(path.join(__dirname, "../Workout-tracker/public/stats.html"));
+    res.sendFile(path.join(__dirname, "../public/stats.html"));
 
 })
 
 app.get("/exercise", (req, res) => {
-    res.sendFile(path.join(__dirname, "../Workout-tracker/public/exercise.html"));
+    res.sendFile(path.join(__dirname, "../public/exercise.html"));
 });
 
 
@@ -47,25 +47,26 @@ app.post("/api/workouts", (req, res) => {
 
 
 // get function fo one workout 
-app.get("/api/workouts", (req, res) => {
-    db.Exercise.findOne({}, function (err, data) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(data)
-        }
-    })
-})
+// app.get("/api/workouts", (req, res) => {
+//     db.Exercise.findOne({}, function (err, data) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             res.json(data)
+//         }
+//     })
+// })
 
-app.get("/api/workouts/range", (req, res) => {
-    db.Exercise.find({}, function (err, data) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(data)
-        }
-    })
-})
+// app.get("/api/workouts/range", (req, res) => {
+//     db.Workout.find({})
+//     .populate("exercises")
+//     .then(exercise => {
+//       res.json(exercise);
+//     })
+//     .catch(err => {
+//       res.json(err);
+//     });
+// })
 
 
 //starts server

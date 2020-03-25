@@ -6,7 +6,8 @@ const WorkoutSchema = new Schema({
     day: Date,
     exercises: [
         {
-            type: Schema.Types.ObjectId
+            type: Schema.Types.ObjectId,
+            ref: "Exercise"
         }
     ]
 });
