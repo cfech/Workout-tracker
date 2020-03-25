@@ -16,7 +16,10 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // mongoose connection
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
+mongoose.Promise = global.Promise
+
+mongoose.connect
+mongoose.connect(process.env.MONGODB_URI || "mongodb://workoutTracker:workout1@ds135810.mlab.com:35810/heroku_kjf9z8b5",{useMongoClient : true}, { useNewUrlParser: true });
 
 // html routes 
 app.get("/stats", (req, res) => {
