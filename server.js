@@ -19,7 +19,7 @@ app.use(express.static("public"));
 mongoose.Promise = global.Promise
 
 mongoose.connect
-mongoose.connect(process.env.MONGODB_URI || "mongodb://workoutTracker:workout1@ds135810.mlab.com:35810/heroku_kjf9z8b5",{useMongoClient : true}, { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://workoutTracker:workout1@ds135810.mlab.com:35810/heroku_kjf9z8b5", { useNewUrlParser: true });
 
 // html routes 
 app.get("/stats", (req, res) => {
@@ -33,35 +33,42 @@ app.get("/exercise", (req, res) => {
 
 
 //Post function for posting workout 
-// app.post("/api/workouts", (req, res) => {
-//     db.notes.insert(req.body, function (err, data) {
-//         if (err)
-//             throw err;
+app.post("/api/workouts", (req, res) => {
+    console.log(req.body)
+    // db.Workout.insert(req.body, function (err, data) {
+    //     if (err)
+    //         throw err;
 
-//         res.send(data)
-//     })
+    //     res.send(data)
+    // })
 
-// })
-
-
-
-//get function fo one workout 
-// app.get("/api/workouts", (req, res) => {
-//     db.exercises.findOne({}, function (err, data) {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             res.json(data)
-//         }
-//     })
-// })
+})
 
 
 
+// get function fo one workout 
+app.get("/api/workouts", (req, res) => {
+    db.Exercise.findOne({}, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(data)
+        }
+    })
+})
 
+app.get("/api/workouts/range", (req, res) => {
+    db.Exercise.find({}, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(data)
+        }
+    })
+})
 
 
 //starts server
-app.listen(3000, () => {
-    console.log("App running on port 3000!");
+app.listen(PORT, () => {
+    console.log("App running on port" + PORT+" !");
 });
