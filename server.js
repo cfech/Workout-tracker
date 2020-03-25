@@ -1,31 +1,32 @@
 const express = require("express");
-const mongojs = require("mongojs");
+const mongoose = require("mongoose");
 const logger = require("morgan");
+const path = require("path");
 
+const db = require("./models");
 const app = express();
-app.use(logger("dev"));
 
+const PORT = process.env.PORT || 3000;
+
+app.use(logger("dev"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(express.static("public"));
 
-const databaseUrl = "workout";
-const collections = ["exercises"];
-
-const db = mongojs(databaseUrl, collections);
+// mongoose connection
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
 
 
 // html routes 
-
 app.get("/stats", (req, res) => {
-    res.send(stats.html);
+    res.sendFile(path.join(__dirname, "../Workout-tracker/public/stats.html"));
 
 })
 
 app.get("/exercise", (req, res) => {
-    res.send(exercise.html);
+    res.sendFile(path.join(__dirname, "../Workout-tracker/public/exercise.html"));
 });
 
 
@@ -58,7 +59,7 @@ app.get("/exercise", (req, res) => {
 
 
 
-
+//starts server
 app.listen(3000, () => {
     console.log("App running on port 3000!");
 });
