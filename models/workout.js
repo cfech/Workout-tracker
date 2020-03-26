@@ -1,10 +1,13 @@
+//Requiring mongoose
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
+//Workout model with exercise sub model
 const WorkoutSchema = new Schema({
     day: {
-        default: Date.now(),
+        default: new Date().setDate(new Date().getDate())
+        ,
         type: Date
     },
     exercises: [
@@ -32,6 +35,8 @@ const WorkoutSchema = new Schema({
     ]
 });
 
+
 const Workout = mongoose.model("workout", WorkoutSchema);
 
+//Exporting workout
 module.exports = Workout;
