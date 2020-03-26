@@ -23,53 +23,70 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://workoutTracker:workout1@d
 
 // html routes  --- dont work on heroku tho
 app.get("/stats", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/stats.html"));
+    res.sendFile(path.join(__dirname, "public/stats.html"));
 
 })
 
 app.get("/exercise", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/exercise.html"));
+    res.sendFile(path.join(__dirname, "public/exercise.html"));
 });
 
-
-//Post function for posting workout 
+//Post for creating workout
 app.post("/api/workouts", (req, res) => {
     console.log(req.body)
-    // db.Workout.insert(req.body, function (err, data) {
-    //     if (err)
-    //         throw err;
+    db.Workout.create(req.body, function (err, data) {
+        if (err)
+            throw err;
 
-    //     res.send(data)
-    // })
+        res.send(data)
+    })
+
+})
+
+//Put for updating workout with exercies
+app.put("/api/workouts/:id", (req, res) => {
+    console.log(req.body)
+    console.log("Id: " + req.params.id)
+    db.Workout.findOneAndUpdate({ _id: mongoose.Types.ObjectId(req.params.id) }, {$set:{exercises: req.body}}, function (err, data) {
+        if (err)
+            throw err;
+
+        res.send(data)
+    })
 
 })
 
 
 
-// get function fo one workout 
-// app.get("/api/workouts", (req, res) => {
-//     db.Exercise.findOne({}, function (err, data) {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             res.json(data)
-//         }
-//     })
-// })
 
-// app.get("/api/workouts/range", (req, res) => {
-//     db.Workout.find({})
-//     .populate("exercises")
-//     .then(exercise => {
-//       res.json(exercise);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
-// })
+
+
+
+
+
+// get function fo one workout 
+app.get("/api/workouts", (req, res) => {
+    db.Workout.find({}, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/api/workouts/range", (req, res) => {
+    db.Workout.find({})
+        .then(exercise => {
+            res.json(exercise);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+})
 
 
 //starts server
 app.listen(PORT, () => {
-    console.log("App running on port" + PORT+" !");
+    console.log("App running on port" + PORT + " !");
 });
