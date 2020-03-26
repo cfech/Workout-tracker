@@ -103,6 +103,7 @@ async function handleFormSubmit(event) {
   if (workoutType === "cardio") {
     workoutData.type = "cardio";
     workoutData.name = cardioNameInput.value.trim();
+    console.log(workoutData.duration)
     workoutData.distance = Number(distanceInput.value.trim());
     workoutData.duration = Number(durationInput.value.trim());
   } else if (workoutType === "resistance") {

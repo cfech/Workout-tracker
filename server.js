@@ -21,7 +21,7 @@ mongoose.Promise = global.Promise
 mongoose.connect
 mongoose.connect(process.env.MONGODB_URI || "mongodb://workoutTracker:workout1@ds135810.mlab.com:35810/heroku_kjf9z8b5", { useNewUrlParser: true });
 
-// html routes  --- dont work on heroku tho
+// html routes 
 app.get("/stats", (req, res) => {
     res.sendFile(path.join(__dirname, "public/stats.html"));
 
@@ -43,7 +43,7 @@ app.post("/api/workouts", (req, res) => {
 
 })
 
-//Put for updating workout with exercies
+//Put for updating workout with exercises
 app.put("/api/workouts/:id", (req, res) => {
     console.log(req.body)
     console.log("Id: " + req.params.id)
@@ -57,16 +57,10 @@ app.put("/api/workouts/:id", (req, res) => {
 })
 
 
-
-
-
-
-
-
-
-// get function fo one workout 
+// get function for one workout 
 app.get("/api/workouts", (req, res) => {
     db.Workout.find({}, function (err, data) {
+        console.log(data)
         if (err) {
             console.log(err);
         } else {
@@ -75,6 +69,7 @@ app.get("/api/workouts", (req, res) => {
     })
 })
 
+// Get route for stats page
 app.get("/api/workouts/range", (req, res) => {
     db.Workout.find({})
         .then(exercise => {
