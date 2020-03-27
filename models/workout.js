@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 //Workout model with exercise sub model
 const WorkoutSchema = new Schema({
     day: {
-        default: new Date().setDate(new Date().getDate())
+        default: Date.now()
         ,
         type: Date
     },
@@ -34,7 +34,6 @@ const WorkoutSchema = new Schema({
         }
     ]
 });
-
 
 const Workout = mongoose.model("workout", WorkoutSchema);
 

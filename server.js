@@ -62,7 +62,6 @@ app.put("/api/workouts/:id", (req, res) => {
 // Get function for one workout on index.html
 app.get("/api/workouts", (req, res) => {
     db.Workout.find({}, function (err, data) {
-        console.log(data)
         if (err) {
             console.log(err);
         } else {
@@ -70,17 +69,19 @@ app.get("/api/workouts", (req, res) => {
         }
     })
 })
-
+// db.Workout.find({}).limit(7)
 // Get route for stats page 
 app.get("/api/workouts/range", (req, res) => {
     db.Workout.find({})
+        // db.Workout.find({ day: { $gte: new Date().setDate(new Date().getDate() - 7), $lte:new Date().setDate(new Date().getDate())  } }).
+        // sort({ day: 1 })
         .then(exercise => {
             res.json(exercise);
         })
         .catch(err => {
             res.json(err);
         });
-})
+});
 
 //starts server
 app.listen(PORT, () => {
