@@ -69,12 +69,10 @@ app.get("/api/workouts", (req, res) => {
         }
     })
 })
-// db.Workout.find({}).limit(7)
+
 // Get route for stats page 
 app.get("/api/workouts/range", (req, res) => {
     db.Workout.find({})
-        // db.Workout.find({ day: { $gte: new Date().setDate(new Date().getDate() - 7), $lte:new Date().setDate(new Date().getDate())  } }).
-        // sort({ day: 1 })
         .then(exercise => {
             res.json(exercise);
         })
